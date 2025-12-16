@@ -1,8 +1,9 @@
-// import { Router } from "express";
-// import { userController } from "./user.controller";
+import { Router } from "express";
+import { userControllers } from "./user.controller";
+import auth from "../../middleware/auth";
 
-// const router = Router();
+const router = Router();
 
-// router.post("/", userController.createUser);
+router.get("/api/v1/users", auth("admin"), userControllers.getUsers);
 
-// export const userRoutes = router;
+export const userRoutes = router;
