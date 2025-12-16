@@ -1,5 +1,7 @@
 import bcrypt from "bcryptjs";
 import { pool } from "../../config/db";
+import jwt from "jsonwebtoken";
+import config from "../../config";
 
 interface RegisterPayload {
   name: string;
@@ -28,6 +30,33 @@ const signUp = async (payload: RegisterPayload) => {
   return result.rows[0];
 };
 
+const signIn = async (email: string, password: string, role: string) => {
+  const result = await pool.query(`SELECT * FROM users WHERE email = $1`, [
+    email,
+  ]);
+
+  if (result.rows.length === 0) {
+    return "No user Found";
+  }
+
+  const user = result.rows[0];
+
+  const matchedPass = await bcrypt.compare(password, user.password);
+
+  if (!matchedPass) {
+    return false;
+  }
+
+  const token = jwt.sign(
+    { name: user.name, email: user.email, role: user.role },
+    `Bearer ${config.jwtSecret}`,
+    { expiresIn: "30d" }
+  );
+
+  return { user, token };
+};
+
 export const authServices = {
   signUp,
+  signIn,
 };

@@ -3,6 +3,10 @@ import { authControllers } from "./auth.controller";
 
 const router = Router();
 
+// signUp
 router.post("/v1/auth/signup", authControllers.signUp);
+
+// signIn
+router.post("/v1/auth/signin", authControllers.signIn);
 
 export const authRoutes = router;
