@@ -49,7 +49,7 @@ const signIn = async (email: string, password: string, role: string) => {
 
   const token = jwt.sign(
     { name: user.name, email: user.email, role: user.role },
-    `Bearer ${config.jwtSecret}`,
+    config.jwtSecret as string,
     { expiresIn: "30d" }
   );
 
