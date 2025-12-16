@@ -14,10 +14,10 @@ app.get("/", (req, res) => {
 });
 
 // Auth Api
-app.use("/api", authRoutes);
+app.use("/", authRoutes);
 
 // Vehicle Api
-app.use("/api", vehicleRoutes);
+app.use("/", vehicleRoutes);
 
 // User Api
 // app.use("/users", userRoutes);
