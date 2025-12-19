@@ -44,25 +44,6 @@ const getBookings = async (req: Request, res: Response) => {
   }
 };
 
-// update booking
-// const updateBooking = async (req: Request, res: Response) => {
-//   const { bookingId } = req.params;
-
-//   try {
-//     const result = await bookingsServices.updateBooking(bookingId as string);
-//     res.status(200).json({
-//       success: true,
-//       message: "Booking cancelled successfully",
-//       result: result.rows,
-//     });
-//   } catch (err: any) {
-//     res.status(500).json({
-//       success: false,
-//       message: err.message,
-//     });
-//   }
-// };
-
 const updateBookingStatus = async (req: Request, res: Response) => {
   const { bookingId } = req.params;
   const { status } = req.body;

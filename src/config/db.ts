@@ -13,8 +13,7 @@ const initDB = async () => {
         email VARCHAR(150) UNIQUE NOT NULL,
         password TEXT NOT NULL,
         phone VARCHAR(15),
-        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'customer')),
-        created_at TIMESTAMP DEFAULT NOW())
+        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'customer')))
         `);
 
   await pool.query(`

@@ -3,13 +3,12 @@ import { vehicleServices } from "./vehicle.service";
 
 // Created vehicles
 const createVehicle = async (req: Request, res: Response) => {
-  console.log(req.body);
   try {
     const result = await vehicleServices.createVehicle(req.body);
     res.status(201).json({
       succes: true,
       data: result.rows[0],
-      message: "Vehicle Created successful",
+      message: "Vehicle Created successfully",
     });
   } catch (error: any) {
     res.status(500).json({

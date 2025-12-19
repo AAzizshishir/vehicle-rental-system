@@ -11,6 +11,7 @@ interface RegisterPayload {
   role: string;
 }
 
+// sign-up
 const signUp = async (payload: RegisterPayload) => {
   const { name, email, password, phone, role } = payload;
 
@@ -30,6 +31,7 @@ const signUp = async (payload: RegisterPayload) => {
   return result.rows[0];
 };
 
+// login
 const signIn = async (email: string, password: string, role: string) => {
   const result = await pool.query(`SELECT * FROM users WHERE email = $1`, [
     email,
