@@ -5,23 +5,29 @@ import config from "../config";
 const auth = (...roles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const token = req.headers.authorization;
+      const authHeader = req.headers.authorization;
 
-      if (!token)
-        return res.status(401).json({ message: "You are not allowed" });
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
 
-      const authToken = req.headers.authorization?.split(" ")[1];
+      const token = authHeader.split(" ")[1];
 
       const decodedToken = jwt.verify(
-        authToken as string,
+        token as string,
         config.jwtSecret as string
       ) as JwtPayload;
 
       req.user = decodedToken;
 
+      req.user = {
+        id: decodedToken.id,
+        role: decodedToken.role,
+      };
+
       if (roles.length && !roles.includes(decodedToken.role)) {
-        return res.status(401).json({
-          error: "unauthorized!!!",
+        return res.status(403).json({
+          message: "Forbidden",
         });
       }
 
